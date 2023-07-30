@@ -12,5 +12,5 @@ class EMA(Indicator):
         # TODO: implement this function
         pass
 
-    def __name__(self):
+    def __str__(self):
         return "EMA_{period}".format(period=self.period)

@@ -7,5 +7,5 @@ class SMA(Indicator):
     def apply(self):
         pass
 
-    def __name__(self):
+    def __str__(self):
         return "SMA_{period}".format(period=self.period)
