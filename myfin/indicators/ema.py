@@ -7,9 +7,22 @@ class EMA(Indicator):
         self.column = column
         self.desc = "EMA_{period}".format(period=self.period)
 
-    def apply(self,serie:pd.Series | pd.DataFrame):
-        data = serie[[self.column]].copy()
-        data = data.ewm(span=self.period).mean()
+    def apply(self,serie:pd.Series | pd.DataFrame, column:str=None):
+        data = None
+        column = column if column is not None else self.column
+
+        # handle params
+        if (isinstance(serie,pd.Series)):
+            data = serie.copy()
+            data = pd.DataFrame(data)
+        elif (isinstance(serie,pd.DataFrame)) :
+            data = serie[[column]].copy()
+        
+        if data is None:
+            return None
+
+        # calculation
+        data = data.ewm(span=self.period,min_periods=self.period).mean()
         data.columns = [self.desc]
         return data
 
