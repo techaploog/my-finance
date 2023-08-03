@@ -11,15 +11,9 @@ class MACD(Indicator):
         self.desc = "MACD_{slow}/{fast}/{macd}".format(slow=self.ema_slow,fast=self.ema_fast,macd=self.signal)
 
     def apply(self,serie:pd.Series | pd.DataFrame, column:str=None):
-        data = None
         cal_column = column if column is not None else self.column
 
-        # handle params
-        if (isinstance(serie,pd.Series)):
-            data = serie.copy()
-            data = pd.DataFrame(data)
-        elif (isinstance(serie,pd.DataFrame)) :
-            data = serie[[cal_column]].copy()
+        data = super().get_df(serie,cal_column)
         
         if data is None:
             return None
@@ -28,12 +22,12 @@ class MACD(Indicator):
         ema_fast = EMA(period=self.ema_fast, column=cal_column)
         ema_slow = EMA(period=self.ema_slow, column=cal_column)
 
-        data["macd_fast"] = ema_fast.apply(data)
-        data["macd_slow"] = ema_slow.apply(data)
-        data["macd"] = data["macd_fast"] - data["macd_slow"]
+        data["MACD_FAST"] = ema_fast.apply(data)
+        data["MACD_SLOW"] = ema_slow.apply(data)
+        data["MACD"] = data["MACD_FAST"] - data["MACD_SLOW"]
 
-        signal = EMA(period=self.signal, column="macd")
-        data["macd_signal"] = signal.apply(data)
+        signal = EMA(period=self.signal, column="MACD")
+        data["MACD_SIGNAL"] = signal.apply(data)
 
         data = data.drop(columns=cal_column,axis=1)
 

@@ -8,15 +8,9 @@ class SMA(Indicator):
         self.desc = "SMA_{period}".format(period=self.period)
 
     def apply(self,serie:pd.Series | pd.DataFrame, column:str=None):
-        data = None
         column = column if column is not None else self.column
         
-        # handle params
-        if (isinstance(serie,pd.Series)):
-            data = serie.copy()
-            data = pd.DataFrame(data)
-        elif (isinstance(serie,pd.DataFrame)) :
-            data = serie[[column]].copy()
+        data = super().get_df(serie,column)
         
         if data is None:
             return None
