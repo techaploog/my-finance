@@ -36,3 +36,16 @@ class ALMA(Indicator):
     
     def __str__(self):
         return self.desc
+
+#* REFERENCE:
+"""
+The Arnaud Legoux Moving Average (ALMA) is a special type of moving average 
+that attempts to 'reduce lag and noise' while providing a smoother and 
+more responsive moving average
+
+ALMA(i) = Σ(Weight(i) * Price(i)) / Σ(Weight(i))
+
+Where "Weight" is calculated as follow:
+
+Weight(i) = Exp(-((i - Offset) * (i - Offset)) / (2 * Exponent * Exponent))
+"""
