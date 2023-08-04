@@ -11,7 +11,7 @@ class Instrument:
         self.start = kwarg["start"] if "start" in kwarg.keys() else None
         self.end = kwarg["end"] if "end" in kwarg.keys() else None
         self.data = None
-        print("[INFO] {} | freq : {}".format(self.symbol,self.period,self.freq))
+        print("[INFO] {} | freq : {}".format(self.symbol,self.freq))
 
     def load_data(self, apply_indictors = True):
         options = {
