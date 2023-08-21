@@ -17,7 +17,5 @@ class Indicator(ABC):
         elif (isinstance(serie,pd.DataFrame)) :
             data = serie[[column]].copy()
         
-        if data is None:
-            return None
         
         return data
